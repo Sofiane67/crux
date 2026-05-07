@@ -1,4 +1,5 @@
 import { Injectable, Logger } from "@nestjs/common";
+import { CreateBriefDto } from "./dto/create-brief.dto";
 import type { Brief } from "./interfaces";
 
 @Injectable()
@@ -22,5 +23,14 @@ export class BriefsService {
 				createdAt: "2026-05-07",
 			},
 		];
+	}
+
+	create(dto: CreateBriefDto): Brief {
+		return {
+			id: crypto.randomUUID(),
+			topic: dto.topic,
+			status: "PENDING",
+			createdAt: "2026-05-07",
+		};
 	}
 }
