@@ -1,6 +1,7 @@
 import { Injectable, Logger } from "@nestjs/common";
 import { CreateBriefDto } from "./dto/create-brief.dto";
 import type { Brief } from "./interfaces";
+import {createId} from "@paralleldrive/cuid2";
 
 @Injectable()
 export class BriefsService {
@@ -11,26 +12,26 @@ export class BriefsService {
 
 		return [
 			{
-				id: "b1",
+				id: createId(),
 				topic: "RAG re-ranking techniques",
 				status: "DONE",
-				createdAt: "2026-05-07",
+				paperIds: ["2410.12345", "2411.00001"],
 			},
 			{
-				id: "b2",
+				id: createId(),
 				topic: "LLM evaluation benchmarks",
 				status: "PENDING",
-				createdAt: "2026-05-07",
+				paperIds: ["2410.9876", "2411.3456"],
 			},
 		];
 	}
 
 	create(dto: CreateBriefDto): Brief {
 		return {
-			id: crypto.randomUUID(),
+			id: createId(),
 			topic: dto.topic,
 			status: "PENDING",
-			createdAt: "2026-05-07",
+			paperIds: dto.paperIds,
 		};
 	}
 }
