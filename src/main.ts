@@ -4,6 +4,7 @@ import { NestFactory } from "@nestjs/core";
 import { AppModule } from "./app.module";
 import type { Env } from "./config/env.schema";
 import {AllExceptionsFilter} from "./common/filters/all-exceptions.filter";
+import {DocumentBuilder, SwaggerModule} from "@nestjs/swagger";
 
 async function bootstrap() {
 	const app = await NestFactory.create(AppModule);
@@ -18,8 +19,18 @@ async function bootstrap() {
 			transformOptions: { enableImplicitConversion: true },
 		}),
 	);
-	app.enableShutdownHooks();
 	app.useGlobalFilters(new AllExceptionsFilter());
+
+	const swaggerConfig = new DocumentBuilder()
+		.setTitle(config.get("APP_NAME", {infer: true}))
+		.setVersion(config.get("APP_VERSION", {infer: true}))
+		.build();
+
+	const document = SwaggerModule.createDocument(app, swaggerConfig);
+	SwaggerModule.setup("api", app, document);
+
+	app.enableShutdownHooks();
+
 	await app.listen(port);
 }
 bootstrap();
