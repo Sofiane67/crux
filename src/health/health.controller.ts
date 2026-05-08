@@ -9,4 +9,6 @@ export class HealthController {
 			ts: new Date().toISOString(),
 		};
 	}
+
+	@Get("boom") boom() { throw new Error("kaboom"); }
 }

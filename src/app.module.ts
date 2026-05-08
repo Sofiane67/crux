@@ -1,9 +1,11 @@
-import { Module } from "@nestjs/common";
-import { ConfigModule } from "@nestjs/config";
-import { BriefsModule } from "./brief/briefs.module";
-import { validateEnv } from "./config/validate-env";
-import { HealthModule } from "./health/health.module";
-import { AppLifecycleModule } from "./lifecycle/app-lifecycle.module";
+import {MiddlewareConsumer, Module, NestModule} from "@nestjs/common";
+import {ConfigModule} from "@nestjs/config";
+import {BriefsModule} from "./brief/briefs.module";
+import {validateEnv} from "./config/validate-env";
+import {HealthModule} from "./health/health.module";
+import {AppLifecycleModule} from "./lifecycle/app-lifecycle.module";
+import {CorrelationIdMiddleware} from "./common/middleware/correlation-id.middleware";
+import {RequestLoggerMiddleware} from "./common/middleware/request-logger.middleware";
 
 @Module({
 	imports: [
@@ -17,4 +19,8 @@ import { AppLifecycleModule } from "./lifecycle/app-lifecycle.module";
 		AppLifecycleModule,
 	],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+    configure(consumer: MiddlewareConsumer) {
+       consumer.apply(CorrelationIdMiddleware, RequestLoggerMiddleware).forRoutes("*")
+    }
+}
