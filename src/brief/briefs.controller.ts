@@ -1,9 +1,9 @@
-import {Body, Controller, Get, Param, Post} from "@nestjs/common";
+import { Body, Controller, Get, Param, Post } from "@nestjs/common";
+import { ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
+import { ParseCuidPipe } from "../common/pipes/parse-cuid.pipe";
 import { BriefsService } from "./briefs.service";
 import { CreateBriefDto } from "./dto/create-brief.dto";
 import type { Brief } from "./interfaces";
-import {ParseCuidPipe} from "../common/pipes/parse-cuid.pipe";
-import {ApiOperation, ApiResponse, ApiTags} from "@nestjs/swagger";
 
 @ApiTags("briefs")
 @Controller("briefs")
@@ -26,7 +26,7 @@ export class BriefsController {
 
 	@Get(":id")
 	@ApiOperation({ summary: "Get a brief by id" })
-	findOne(@Param("id", ParseCuidPipe) id: string): { id: string} {
+	findOne(@Param("id", ParseCuidPipe) id: string): { id: string } {
 		return { id };
 	}
 }

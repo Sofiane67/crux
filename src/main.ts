@@ -1,10 +1,10 @@
 import { ValidationPipe } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { NestFactory } from "@nestjs/core";
+import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
 import { AppModule } from "./app.module";
+import { AllExceptionsFilter } from "./common/filters/all-exceptions.filter";
 import type { Env } from "./config/env.schema";
-import {AllExceptionsFilter} from "./common/filters/all-exceptions.filter";
-import {DocumentBuilder, SwaggerModule} from "@nestjs/swagger";
 
 async function bootstrap() {
 	const app = await NestFactory.create(AppModule);
@@ -22,8 +22,8 @@ async function bootstrap() {
 	app.useGlobalFilters(new AllExceptionsFilter());
 
 	const swaggerConfig = new DocumentBuilder()
-		.setTitle(config.get("APP_NAME", {infer: true}))
-		.setVersion(config.get("APP_VERSION", {infer: true}))
+		.setTitle(config.get("APP_NAME", { infer: true }))
+		.setVersion(config.get("APP_VERSION", { infer: true }))
 		.build();
 
 	const document = SwaggerModule.createDocument(app, swaggerConfig);

@@ -1,7 +1,7 @@
 import { Injectable, Logger } from "@nestjs/common";
+import { createId } from "@paralleldrive/cuid2";
 import { CreateBriefDto } from "./dto/create-brief.dto";
 import type { Brief } from "./interfaces";
-import {createId} from "@paralleldrive/cuid2";
 
 @Injectable()
 export class BriefsService {
