@@ -7,6 +7,7 @@ import { validateEnv } from "./config/validate-env";
 import { HealthModule } from "./health/health.module";
 import { AppLifecycleModule } from "./lifecycle/app-lifecycle.module";
 import { PrismaModule } from "./prisma/prisma.module";
+import { UsersModule } from "./users/users.module";
 
 @Module({
 	imports: [
@@ -19,6 +20,7 @@ import { PrismaModule } from "./prisma/prisma.module";
 		HealthModule,
 		BriefsModule,
 		AppLifecycleModule,
+		UsersModule,
 	],
 })
 export class AppModule implements NestModule {
